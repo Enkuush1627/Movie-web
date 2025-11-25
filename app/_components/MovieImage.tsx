@@ -13,7 +13,7 @@ export const MovieImage = ({
   className,
   loading,
 }: MovieImageProps) => {
-  const imgUrl = `${process.env.TMDB_IMAGE_SERVICE_URL}/original${backdrop_path}`;
+  const imgUrl = `https://api.themoviedb.org/3/original${backdrop_path}`;
   const img = backdrop_path ? imgUrl : "/image.png";
 
   if (loading) return <>loaidng....</>;

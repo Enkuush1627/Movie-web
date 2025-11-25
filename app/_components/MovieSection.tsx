@@ -15,11 +15,11 @@ export const MovieSection = (props: MovieSectionProps) => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        `${process.env.TMDB_BASE_URL}/movie/${categoryName}?language=en-US&page=1`,
+        `https://api.themoviedb.org/3/movie/${categoryName}?language=en-US&page=1`,
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjVlNTRlOGMwMDZjMzQ2OTQ4ZWU2ZDQzN2FkNWNiMyIsIm5iZiI6MTc2MzUyNDI2OS45ODMsInN1YiI6IjY5MWQzZWFkMzdkZTk2Y2NjOTJjOWJhMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WpICXc-Ow5QiO9fEzG2vtIG2zVfY8H3IpOQ7gpkOM3Q`,
           },
         }
       );
