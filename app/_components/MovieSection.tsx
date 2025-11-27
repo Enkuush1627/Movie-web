@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { MovieCard } from "./MovieCard";
 
 type MovieSectionProps = {
   categoryName: string;
@@ -40,10 +41,11 @@ export const MovieSection = (props: MovieSectionProps) => {
           </Link>
         )}
       </div>
-
-      {movies.map((el) => (
-        <div key={el.id}>{el.title}</div>
+      <div className="grid grid-cols-5 gap-10">
+      {movies.slice(0, 10).map((el) => (
+        <MovieCard key={el.id} id={el.id}  backdrop_path={el.backdrop_path}  title={el.title}  vote_average={el.vote_average} />
       ))}
+      </div>
     </div>
   );
 };

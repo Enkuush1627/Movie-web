@@ -1,30 +1,26 @@
 import Image from "next/image";
 import { MovieCard } from "./_components/MovieCard";
 import { MovieSection } from "./_components/MovieSection";
+import { title } from "process";
 export default function Home() {
+  const categories = [{
+    categoryName: "upcoming",
+    title: "Upcoming",
+    showButton: true
+  },
+  {categoryName: "top_rated", title: "Top Rated", showButton: true},
+{categoryName: "popular", title: "Popular", showButton: true}]
   return (
   <div>
-      <div className=" gap-96 bg-red-200">
-        <MovieSection
-          categoryName="upcoming"
-          title="Upcoming"
-          showButton={true}
-        />
-        </div>
-      <div className=" gap-96 bg-amber-200">
-        <MovieSection
-          categoryName="top_rated"
-          title="Top Rated"
-          showButton={true}
-        />
-      </div>
-      <div className=" gap-96 bg-blue-200">
-        <MovieSection
-          categoryName="popular"
-          title="Popular"
-          showButton={true}
-        />
-      </div>
+    {categories.map((category) => {
+      return (
+      <MovieSection key={category.categoryName}
+      categoryName={category.categoryName}
+      title={category.title}
+      showButton={category.showButton}
+      />
+      )
+    })}
     </div>
   );
 }
