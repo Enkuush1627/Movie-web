@@ -1,32 +1,8 @@
-// "use client";
-
-// import { MovieSection } from "@/app/_components/MovieSection";
-// import { use } from "react";
-
-// const CategorySectionDetail = ({
-//   params,
-// }: {
-//   params: Promise<{ categoryName: string }>;
-// }) => {
-//   const { categoryName } = use(params);
-
-//   return (
-//     <div className=" gap-96 bg-red-200">
-//       <MovieSection
-//         categoryName={categoryName}
-//         title={categoryName}
-//         showButton={false}
-//       />
-//     </div>
-//   );
-// };
-
-// export default CategorySectionDetail;
 "use client"
 
-import { useEffect, useState } from "react";
-import { MovieCard } from "../_components/MovieCard";
 import { MovieSection } from "@/app/_components/MovieSection";
+import { categories } from "@/app/_constant";
+import { use } from "react";
 
 const CategorySectionDetail = ({
   params, 
@@ -34,12 +10,14 @@ const CategorySectionDetail = ({
   params: Promise<{categoryName: string}>;
 }) => { 
   const { categoryName }= use(params)
+  const title = categories.find
+  ((el) => el.categoryName === categoryName)?.title
 
   return(
-    <div className="gap-96 bg-red-200">
+    <div className="gap-96">
       <MovieSection 
       categoryName={categoryName}
-      title={categoryName}
+      title={title}
       showButton={false}/>
     </div>
   )

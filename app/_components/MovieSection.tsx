@@ -5,13 +5,13 @@ import { MovieCard } from "./MovieCard";
 
 type MovieSectionProps = {
   categoryName: string;
-  title: string;
+  title?: string;
   showButton: boolean;
 };
 
 export const MovieSection = (props: MovieSectionProps) => {
   const [movies, setMovies] = useState<MovieDetail[]>([]);
-  const { categoryName, title, showButton } = props;
+  const { categoryName, title = "", showButton } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,7 +42,7 @@ export const MovieSection = (props: MovieSectionProps) => {
         )}
       </div>
       <div className="grid grid-cols-5 gap-10">
-      {movies.slice(0, 10).map((el) => (
+      {movies?.slice(0, 10).map((el) => (
         <MovieCard key={el.id} id={el.id}  backdrop_path={el.backdrop_path}  title={el.title}  vote_average={el.vote_average} />
       ))}
       </div>

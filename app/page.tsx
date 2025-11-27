@@ -1,15 +1,6 @@
-import Image from "next/image";
-import { MovieCard } from "./_components/MovieCard";
 import { MovieSection } from "./_components/MovieSection";
-import { title } from "process";
+import { categories } from "./_constant";
 export default function Home() {
-  const categories = [{
-    categoryName: "upcoming",
-    title: "Upcoming",
-    showButton: true
-  },
-  {categoryName: "top_rated", title: "Top Rated", showButton: true},
-{categoryName: "popular", title: "Popular", showButton: true}]
   return (
   <div>
     {categories.map((category) => {
