@@ -10,15 +10,18 @@ const CategorySectionDetail = ({
   params: Promise<{categoryName: string}>;
 }) => { 
   const { categoryName }= use(params)
+  
   const title = categories.find
-  ((el) => el.categoryName === categoryName)?.title
+  ((el) => el.categoryName === categoryName
+  )?.title
 
   return(
     <div className="gap-96">
       <MovieSection 
       categoryName={categoryName}
       title={title}
-      showButton={false}/>
+      showButton={false}
+      />
     </div>
   )
 }

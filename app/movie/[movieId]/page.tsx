@@ -39,7 +39,7 @@ const MovieDetailPage = ({
           console.log(videoData.results[1]?.key)
 
           setMovie(data);
-          setVideo(videoData.results[1]?.key)
+          setVideo(videoData.results[5]?.key)
         };
         fetchData();
       }, []);
