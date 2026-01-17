@@ -1,57 +1,116 @@
-"use client"
+"use client";
+
 import { use, useEffect, useState } from "react";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
+import MovieCredits from "./_componenets/MovieCredits";
+import MoreLikeThis from "./_componenets/MoreLikeThis";
+import MovieDetailSkeleton from "./_componenets/MovieDetailSkelton";
 
 const MovieDetailPage = ({
   params,
 }: {
-  params: Promise<{ movieId: string }>
+  params: Promise<{ movieId: string }>;
 }) => {
-    const { movieId } = use(params)
-      const [movie, setMovie] = useState<MovieDetail>();
-      const [video, setVideo] = useState<string>("");
+  const { movieId } = use(params);
 
-    
-      useEffect(() => {
-        const fetchData = async () => {
-          const res = await fetch(
-            `https://api.themoviedb.org/3//movie/${movieId}?language=en-US`,
+  const [movie, setMovie] = useState<MovieDetail | null>(null);
+  const [video, setVideo] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        setLoading(true);
+
+        const [movieRes, videoRes] = await Promise.all([
+          fetch(
+            `https://api.themoviedb.org/3/movie/${movieId}?language=en-US`,
             {
               headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjVlNTRlOGMwMDZjMzQ2OTQ4ZWU2ZDQzN2FkNWNiMyIsIm5iZiI6MTc2MzUyNDI2OS45ODMsInN1YiI6IjY5MWQzZWFkMzdkZTk2Y2NjOTJjOWJhMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WpICXc-Ow5QiO9fEzG2vtIG2zVfY8H3IpOQ7gpkOM3Q`,
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
               },
             }
-          );
-
-          const videoRes = await fetch(
-            `https://api.themoviedb.org/3//movie/${movieId}/videos?language=en-US`,
+          ),
+          fetch(
+            `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
             {
               headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjVlNTRlOGMwMDZjMzQ2OTQ4ZWU2ZDQzN2FkNWNiMyIsIm5iZiI6MTc2MzUyNDI2OS45ODMsInN1YiI6IjY5MWQzZWFkMzdkZTk2Y2NjOTJjOWJhMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WpICXc-Ow5QiO9fEzG2vtIG2zVfY8H3IpOQ7gpkOM3Q`,
+                Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
               },
             }
-          );
-          const data = await res.json();
-          const videoData = await videoRes.json();
+          ),
+        ]);
 
-          console.log(videoData.results[1]?.key)
+        const movieData = await movieRes.json();
+        const videoData = await videoRes.json();
 
-          setMovie(data);
-          setVideo(videoData.results[5]?.key)
-        };
-        fetchData();
-      }, []);
+        setMovie(movieData);
+        setVideo(
+          videoData.results?.find((v: any) => v.site === "YouTube")?.key ?? null
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAll();
+  }, [movieId]);
+
+  if (loading) {
     return (
-        <div className="">
-            <div className="flex justify-between overflow-hidden">
-                <img src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
-                className="w-[300px] h-[400px]"/>
-                <ReactPlayer src={`https://www.youtube.com/watch?v=${video}`} width={1000} height={400}/>
-            </div>
-        </div>
-    )
-}
+      <div className="flex justify-center">
+        <MovieDetailSkeleton />
+      </div>
+    );
+  }
 
-export default MovieDetailPage
+  if (!movie) return null;
+
+  return (
+    <div className="flex justify-center">
+      <section className="w-270 mt-10">
+        <h1 className="text-4xl font-bold">{movie.title}</h1>
+
+        <p className="text-lg text-muted-foreground mt-2">
+          {movie.release_date?.slice(0, 4)} ·{" "}
+          {movie.runtime ? `${movie.runtime} min` : "—"}
+        </p>
+
+        <div className="flex gap-6 mt-6">
+          <img
+            src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+            className="w-[290px] h-[428px] rounded-lg"
+          />
+
+          {video && (
+            <ReactPlayer
+              src={`https://www.youtube.com/watch?v=${video}`}
+              width={760}
+              height={428}
+            />
+          )}
+        </div>
+
+        <div className="flex gap-2 mt-4 flex-wrap">
+          {movie.genres?.map((genre) => (
+            <span
+              key={genre.id}
+              className="px-3 py-1 rounded-full border text-xs font-medium"
+            >
+              {genre.name}
+            </span>
+          ))}
+        </div>
+
+        <p className="mt-6 text-muted-foreground max-w-[900px]">
+          {movie.overview}
+        </p>
+
+        <MovieCredits movieId={movieId} />
+        <MoreLikeThis movieId={movieId} />
+      </section>
+    </div>
+  );
+};
+
+export default MovieDetailPage;

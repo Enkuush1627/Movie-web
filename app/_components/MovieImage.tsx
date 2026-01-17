@@ -1,20 +1,20 @@
 import Image from "next/image";
 
 type MovieImageProps = {
-  backdrop_path?: string;
+  poster_path?: string;
   title: string;
   className: string;
   loading?: boolean;
 };
 
 export const MovieImage = ({
-  backdrop_path,
+  poster_path,
   title,
   className,
   loading,
 }: MovieImageProps) => {
-  const imgUrl = `https://image.tmdb.org/t/p/original${backdrop_path}`;
-  const img = backdrop_path ? imgUrl : "/image.png";
+  const imgUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
+  const img = poster_path ? imgUrl : "/image.png";
 
   if (loading) return <>loaidng....</>;
 

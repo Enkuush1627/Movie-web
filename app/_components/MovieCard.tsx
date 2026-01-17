@@ -4,15 +4,15 @@ import { MovieImage } from "./MovieImage";
 
 type MovieCardProps = {
   id: number;
-  backdrop_path?: string;
+  poster_path?: string;
   title: string;
-  vote_average: string;
+  vote_average: number;
   className?: string;
 };
 
 export const MovieCard = ({
   id,
-  backdrop_path,
+  poster_path,
   title,
   vote_average,
 }: MovieCardProps) => {
@@ -20,7 +20,7 @@ export const MovieCard = ({
     <Link rel="preload" href={`/movie/${id}`}>
       <div key={id} className="rounded-lg overflow-hidden">
         <MovieImage
-          backdrop_path={backdrop_path}
+          poster_path={poster_path}
           title={title}
           className="aspect-2/3"
         />
