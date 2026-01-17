@@ -2,9 +2,9 @@
 
 import { use, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
-import MovieCredits from "./_componenets/MovieCredits";
-import MoreLikeThis from "./_componenets/MoreLikeThis";
-import MovieDetailSkeleton from "./_componenets/MovieDetailSkelton";
+import MovieCredits from "./_components/MovieCredits";
+import MoreLikeThis from "./_components/MoreLikeThis";
+import MovieDetailSkeleton from "./_components/MovieDetailSkelton";
 
 const MovieDetailPage = ({
   params,
