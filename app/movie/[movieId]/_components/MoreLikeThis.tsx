@@ -47,7 +47,7 @@ export default function MoreLikeThis({ movieId }: Props) {
           More like this
         </h3>
         <Link href={`/movie/${movieId}/LikeThis`}>
-          <span className="flex items-center gap-2 font-medium text-sm text-[#09090B] cursor-pointer">
+          <span className="flex items-center gap-2 font-medium text-sm text-[#09090B] dark:text-white cursor-pointer">
             See more <ArrowRight size={16} />
           </span>
         </Link>
