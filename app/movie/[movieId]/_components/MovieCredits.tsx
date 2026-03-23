@@ -30,7 +30,7 @@ export default function MovieCredits({ movieId }: Props) {
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
           },
-        }
+        },
       );
 
       const data = await res.json();
@@ -43,7 +43,7 @@ export default function MovieCredits({ movieId }: Props) {
 
   const director = crew.find((c) => c.job === "Director");
   const writers = crew.filter(
-    (c) => c.job === "Writer" || c.job === "Screenplay"
+    (c) => c.job === "Writer" || c.job === "Screenplay",
   );
 
   return (
@@ -51,14 +51,18 @@ export default function MovieCredits({ movieId }: Props) {
       <div className="space-y-2 text-sm">
         {director && (
           <p className="flex gap-[53px] items-center border-b py-2">
-            <span className="font-bold text-base text-[#09090B]">Director</span>{" "}
+            <span className="font-bold text-base text-[#09090B] dark:text-white">
+              Director
+            </span>{" "}
             <span className="text-muted-foreground">{director.name}</span>
           </p>
         )}
 
         {writers.length > 0 && (
           <p className="flex gap-[58px] items-center border-b py-2">
-            <span className="font-bold text-base text-[#09090B]">Writers</span>{" "}
+            <span className="font-bold text-base text-[#09090B] dark:text-white">
+              Writers
+            </span>{" "}
             <span className="text-muted-foreground">
               {writers.map((w) => w.name).join(" · ")}
             </span>
@@ -67,7 +71,9 @@ export default function MovieCredits({ movieId }: Props) {
       </div>
 
       <div className="flex gap-[74px] items-center border-b py-2">
-        <h3 className="font-bold text-base text-[#09090B]">Stars</h3>
+        <h3 className="font-bold text-base text-[#09090B] dark:text-white">
+          Stars
+        </h3>
 
         <div className="flex gap-2 text-sm">
           {cast.slice(0, 5).map((actor) => (

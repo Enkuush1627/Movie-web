@@ -27,12 +27,14 @@ export const MovieCard = ({
         <div className="p-3 bg-muted h-27">
           <div className="flex gap-1 items-center">
             <Star size={18} strokeWidth={0} fill="#FDE047" />
-            <p className="text-sm pb-1">
+            <p className="text-sm pb-1 dark:text-black">
               {vote_average}{" "}
-              <span className="text-xs text-muted-foreground">/10</span>
+              <span className="text-xs text-muted-foreground dark:text-black">
+                /10
+              </span>
             </p>
           </div>
-          <p className="text-lg">{title}</p>
+          <p className="text-lg dark:text-black">{title}</p>
         </div>
       </div>
     </Link>

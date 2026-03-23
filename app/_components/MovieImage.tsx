@@ -14,7 +14,7 @@ export const MovieImage = ({
   loading,
 }: MovieImageProps) => {
   const imgUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
-  const img = poster_path ? imgUrl : "/image.png";
+  const img = poster_path ? imgUrl : "/placeholder.png";
 
   if (loading) return <>loaidng....</>;
 

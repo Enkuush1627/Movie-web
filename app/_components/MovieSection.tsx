@@ -26,7 +26,7 @@ export const MovieSection = (props: MovieSectionProps) => {
             "Content-Type": "application/json",
             Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjVlNTRlOGMwMDZjMzQ2OTQ4ZWU2ZDQzN2FkNWNiMyIsIm5iZiI6MTc2MzUyNDI2OS45ODMsInN1YiI6IjY5MWQzZWFkMzdkZTk2Y2NjOTJjOWJhMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WpICXc-Ow5QiO9fEzG2vtIG2zVfY8H3IpOQ7gpkOM3Q`,
           },
-        }
+        },
       );
       const data = await res.json();
       setLoading(true);
@@ -41,10 +41,12 @@ export const MovieSection = (props: MovieSectionProps) => {
     <div className="flex flex-col justify-center items-center">
       <div className="w-[1440px]">
         <div className="flex py-12 justify-between items-center">
-          <h3 className="text-2xl text-[#09090B] font-semibold">{title}</h3>
+          <h3 className="text-2xl text-[#09090B] dark:text-white font-semibold">
+            {title}
+          </h3>
           {showButton && (
             <Link href={`/category/${categoryName}`}>
-              <p className="flex items-center gap-3 font-medium text-sm text-[#09090B]">
+              <p className="flex items-center gap-3 font-medium text-sm dark:text-white text-[#09090B]">
                 See more <ArrowRight size={9.33} />
               </p>
             </Link>

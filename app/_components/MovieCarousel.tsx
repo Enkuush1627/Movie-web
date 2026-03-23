@@ -41,7 +41,7 @@ export const MovieCarousel = () => {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
             },
-          }
+          },
         );
 
         const data = await res.json();
@@ -63,13 +63,13 @@ export const MovieCarousel = () => {
         headers: {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
         },
-      }
+      },
     );
 
     const data = await res.json();
     const trailer =
       data.results?.find(
-        (v: any) => v.type === "Trailer" && v.site === "YouTube"
+        (v: any) => v.type === "Trailer" && v.site === "YouTube",
       ) || data.results?.[0];
 
     if (trailer) setTrailerKey(trailer.key);
@@ -102,16 +102,20 @@ export const MovieCarousel = () => {
                 <div className="absolute inset-0 bg-liner-to-r from-black/70 via-black/40 to-transparent" />
 
                 <div className="absolute left-16 bottom-24 max-w-lg text-white z-10">
-                  <p className="text-sm opacity-80 mb-2">Now Playing</p>
+                  <p className="text-sm opacity-80 mb-2 dark:text-black">
+                    Now Playing
+                  </p>
 
-                  <h1 className="text-4xl font-bold mb-3">{movie.title}</h1>
+                  <h1 className="text-4xl font-bold mb-3 dark:text-black">
+                    {movie.title}
+                  </h1>
 
                   <div className="flex items-center gap-2 mb-4">
                     <Star size={16} className="text-yellow-400" />
                     {movie.vote_average.toFixed(1)}
                   </div>
 
-                  <p className="text-sm opacity-90 line-clamp-3 mb-6">
+                  <p className="text-sm opacity-90 line-clamp-3 mb-6 dark:text-black">
                     {movie.overview}
                   </p>
 

@@ -29,7 +29,7 @@ export default function LikeThisPage({
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
           },
-        }
+        },
       );
 
       const data = await res.json();
@@ -42,7 +42,7 @@ export default function LikeThisPage({
   return (
     <section className="max-w-[1200px] w-full mx-auto px-6 mt-10">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">More like this</h1>
+        <h1 className="text-3xl font-bold dark:text-white">More like this</h1>
       </div>
 
       <div className="grid grid-cols-5 gap-6">
