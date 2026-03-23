@@ -102,11 +102,11 @@ export const MovieCarousel = () => {
                 <div className="absolute inset-0 bg-liner-to-r from-black/70 via-black/40 to-transparent" />
 
                 <div className="absolute left-16 bottom-24 max-w-lg text-white z-10">
-                  <p className="text-sm opacity-80 mb-2 dark:text-black">
+                  <p className="text-sm opacity-80 mb-2 text-foreground">
                     Now Playing
                   </p>
 
-                  <h1 className="text-4xl font-bold mb-3 dark:text-black">
+                  <h1 className="text-4xl font-bold mb-3 text-foreground">
                     {movie.title}
                   </h1>
 
@@ -115,7 +115,7 @@ export const MovieCarousel = () => {
                     {movie.vote_average.toFixed(1)}
                   </div>
 
-                  <p className="text-sm opacity-90 line-clamp-3 mb-6 dark:text-black">
+                  <p className="text-sm opacity-90 line-clamp-3 mb-6 text-foreground">
                     {movie.overview}
                   </p>
 
