@@ -26,7 +26,7 @@ export default function MoreLikeThis({ movieId }: Props) {
           headers: {
             Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
           },
-        }
+        },
       );
 
       const data = await res.json();
@@ -43,7 +43,7 @@ export default function MoreLikeThis({ movieId }: Props) {
   return (
     <section className="max-w-[1200px] w-full mt-16">
       <div className="flex justify-between items-center mb-6">
-        <h3 className="text-2xl text-[#09090B] font-semibold">
+        <h3 className="text-2xl text-[#09090B] font-semibold dark:text-white">
           More like this
         </h3>
         <Link href={`/movie/${movieId}/LikeThis`}>

@@ -57,14 +57,14 @@ export default function MovieSearch() {
 
         const res = await fetch(
           `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
-            query
+            query,
           )}&language=en-US&page=1&include_adult=false`,
           {
             headers: {
               Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
             },
             signal: controller.signal,
-          }
+          },
         );
 
         const data = await res.json();
@@ -88,7 +88,7 @@ export default function MovieSearch() {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="relative w-[379px]">
+        <div className="relative w-[379px] dark:bg-black">
           <Search
             size={18}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
@@ -114,7 +114,9 @@ export default function MovieSearch() {
           )}
 
           {!loading && results.length === 0 && (
-            <p className="p-8 text-sm text-center">No results found</p>
+            <p className="p-8 text-sm text-center dark:text-white">
+              No results found
+            </p>
           )}
 
           {!loading &&
@@ -140,7 +142,9 @@ export default function MovieSearch() {
                 </div>
 
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{movie.title}</p>
+                  <p className="text-sm font-medium dark:text-white">
+                    {movie.title}
+                  </p>
                   {movie.release_date && (
                     <p className="text-xs text-muted-foreground">
                       {movie.release_date.slice(0, 4)}
@@ -148,7 +152,7 @@ export default function MovieSearch() {
                   )}
                 </div>
 
-                <div className="flex items-end gap-1 text-sm font-medium">
+                <div className="flex items-end gap-1 text-sm font-medium dark:text-white">
                   See more <ArrowRight size={16} />
                 </div>
               </div>
