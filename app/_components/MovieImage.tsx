@@ -1,32 +1,44 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 
 type MovieImageProps = {
-  poster_path?: string;
+  poster_path?: string | null;
   title: string;
-  className: string;
+  className?: string;
   loading?: boolean;
 };
 
 export const MovieImage = ({
   poster_path,
   title,
-  className,
+  className = "",
   loading,
 }: MovieImageProps) => {
-  const imgUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
-  const img = poster_path ? imgUrl : "/placeholder.png";
+  const fallback = "/placeholder.png";
 
-  if (loading) return <>loaidng....</>;
+  const [src, setSrc] = useState(
+    poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : fallback,
+  );
+
+  if (loading) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        loading...
+      </div>
+    );
+  }
 
   return (
     <Image
-      src={img}
+      src={src}
       width={500}
-      height={500}
+      height={750}
       alt={title}
       className={className}
       style={{ objectFit: "cover" }}
-      loading="eager"
+      onError={() => setSrc(fallback)}
     />
   );
 };

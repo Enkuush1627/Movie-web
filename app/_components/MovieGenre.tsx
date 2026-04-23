@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { ChevronDown, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +10,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { ChevronDown, ChevronRight } from "lucide-react";
-import Link from "next/link";
 
 type Genre = {
   id: number;
@@ -19,21 +18,36 @@ type Genre = {
 
 export default function MovieGenre() {
   const [genres, setGenres] = useState<Genre[]>([]);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchGenres = async () => {
-      const res = await fetch(
-        "https://api.themoviedb.org/3/genre/movie/list?language=en",
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
-          },
-        }
-      );
+      try {
+        setLoading(true);
 
-      const data = await res.json();
-      setGenres(data.genres ?? []);
+        const res = await fetch(
+          "https://api.themoviedb.org/3/genre/movie/list?language=en",
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
+            },
+          },
+        );
+
+        if (!res.ok) {
+          console.error("Failed to fetch genres");
+          setGenres([]);
+          return;
+        }
+
+        const data = await res.json();
+        setGenres(data.genres ?? []);
+      } catch (err) {
+        console.error(err);
+        setGenres([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchGenres();
@@ -58,17 +72,31 @@ export default function MovieGenre() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            {genres.map((genre) => (
-              <Link href={`/genre?ids=${genre.id}`}>
-                <Button
-                  key={genre.id}
-                  className="flex items-center gap-2 bg-white text-black h-5 rounded-full border text-xs font-semibold hover:bg-muted"
-                >
-                  {genre.name}
-                  <ChevronRight size={14} />
-                </Button>
-              </Link>
-            ))}
+            {loading && (
+              <p className="text-sm text-muted-foreground">Loading...</p>
+            )}
+
+            {!loading &&
+              genres.length > 0 &&
+              genres.map((genre) => (
+                <Link key={genre.id} href={`/genre?ids=${genre.id}`}>
+                  <Button className="flex items-center gap-2 bg-white text-black h-5 rounded-full border text-xs font-semibold hover:bg-muted">
+                    {genre.name}
+                    <ChevronRight size={14} />
+                  </Button>
+                </Link>
+              ))}
+
+            {!loading && genres.length === 0 && (
+              <div className="w-full flex flex-col items-center justify-center py-6 text-muted-foreground">
+                <img
+                  src="/placeholder.png"
+                  alt="no genres"
+                  className="w-16 opacity-60 mb-2"
+                />
+                <p className="text-sm">No genres found</p>
+              </div>
+            )}
           </div>
         </div>
       </PopoverContent>

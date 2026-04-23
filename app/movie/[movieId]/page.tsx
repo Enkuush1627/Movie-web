@@ -29,7 +29,7 @@ const MovieDetailPage = ({
               headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
               },
-            }
+            },
           ),
           fetch(
             `https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,
@@ -37,7 +37,7 @@ const MovieDetailPage = ({
               headers: {
                 Authorization: `Bearer ${process.env.NEXT_PUBLIC_TMDB_TOKEN}`,
               },
-            }
+            },
           ),
         ]);
 
@@ -46,7 +46,8 @@ const MovieDetailPage = ({
 
         setMovie(movieData);
         setVideo(
-          videoData.results?.find((v: any) => v.site === "YouTube")?.key ?? null
+          videoData.results?.find((v: any) => v.site === "YouTube")?.key ??
+            null,
         );
       } finally {
         setLoading(false);
@@ -78,8 +79,16 @@ const MovieDetailPage = ({
 
         <div className="flex gap-6 mt-6">
           <img
-            src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
-            className="w-[290px] h-[428px] rounded-lg"
+            src={
+              movie.poster_path
+                ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                : "/placeholder.png"
+            }
+            alt={movie.title}
+            className="w-[290px] h-[428px] rounded-lg object-cover"
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = "/placeholder.png";
+            }}
           />
 
           {video && (

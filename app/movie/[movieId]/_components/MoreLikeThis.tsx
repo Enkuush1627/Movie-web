@@ -57,14 +57,20 @@ export default function MoreLikeThis({ movieId }: Props) {
         {movies.slice(0, 5).map((movie) => (
           <Link key={movie.id} href={`/movie/${movie.id}`}>
             <div className="cursor-pointer group">
-              <div className="w-full h-80 bg-muted rounded-lg overflow-hidden">
-                {movie.poster_path && (
-                  <img
-                    src={`https://image.tmdb.org/t/p/w342${movie.poster_path}`}
-                    alt={movie.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition"
-                  />
-                )}
+              <div className="w-full h-80 bg-muted rounded-lg overflow-hidden flex items-center justify-center">
+                <img
+                  src={
+                    movie.poster_path
+                      ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
+                      : "/placeholder.png"
+                  }
+                  alt={movie.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src =
+                      "/placeholder.png";
+                  }}
+                />
               </div>
 
               <p className="mt-2 text-sm font-medium truncate">{movie.title}</p>

@@ -67,6 +67,11 @@ export default function MovieSearch() {
           },
         );
 
+        if (!res.ok) {
+          setResults([]);
+          return;
+        }
+
         const data = await res.json();
         setResults(data.results ?? []);
       } catch (e) {
@@ -105,13 +110,8 @@ export default function MovieSearch() {
 
       <PopoverContent align="start" className="w-[577px] p-0 z-50">
         <div className="max-h-[360px] overflow-y-auto">
-          {loading && (
-            <>
-              {Array.from({ length: 4 }).map((_, i) => (
-                <SearchSkeleton key={i} />
-              ))}
-            </>
-          )}
+          {loading &&
+            Array.from({ length: 4 }).map((_, i) => <SearchSkeleton key={i} />)}
 
           {!loading && results.length === 0 && (
             <p className="p-8 text-sm text-center dark:text-white">
@@ -131,14 +131,20 @@ export default function MovieSearch() {
                 className="flex gap-3 p-3 cursor-pointer hover:bg-muted transition justify-between"
               >
                 <div className="w-[67px] h-[90px] relative bg-muted rounded overflow-hidden">
-                  {movie.poster_path && (
-                    <Image
-                      src={`${IMAGE_BASE}${movie.poster_path}`}
-                      alt={movie.title}
-                      fill
-                      className="object-cover"
-                    />
-                  )}
+                  <Image
+                    src={
+                      movie.poster_path
+                        ? `${IMAGE_BASE}${movie.poster_path}`
+                        : "/placeholder.png"
+                    }
+                    alt={movie.title}
+                    fill
+                    className="object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).src =
+                        "/placeholder.png";
+                    }}
+                  />
                 </div>
 
                 <div className="flex-1">
