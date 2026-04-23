@@ -45,7 +45,11 @@ export const MovieCarousel = () => {
 
         const data = await res.json();
         setMovies(data.results?.slice(0, 5) ?? []);
-      } finally {
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
+      } catch {
         setLoading(false);
       }
     };
