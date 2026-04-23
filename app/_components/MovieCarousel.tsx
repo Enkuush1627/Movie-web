@@ -14,7 +14,6 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { MovieCarouselSkeleton } from "./MovieCarouselSkelton";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getImage } from "@/lib/getImage";
 
 type Movie = {
@@ -29,9 +28,6 @@ export const MovieCarousel = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [trailerKey, setTrailerKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
-  // 👉 image бүрийн loading state
-  const [imageLoaded, setImageLoaded] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -76,7 +72,6 @@ export const MovieCarousel = () => {
     if (trailer) setTrailerKey(trailer.key);
   };
 
-  // 👉 page level skeleton
   if (loading) return <MovieCarouselSkeleton />;
 
   return (
@@ -86,31 +81,14 @@ export const MovieCarousel = () => {
           {movies.map((movie) => (
             <CarouselItem key={movie.id}>
               <div className="relative w-full h-[600px] overflow-hidden">
-                {!imageLoaded[movie.id] && (
-                  <Skeleton className="absolute inset-0 z-0" />
-                )}
-
                 <Image
                   src={getImage(movie.backdrop_path)}
                   alt={movie.title}
                   fill
-                  className={`object-cover transition-opacity duration-500 ${
-                    imageLoaded[movie.id] ? "opacity-100" : "opacity-0"
-                  }`}
-                  onLoad={() =>
-                    setImageLoaded((prev) => ({
-                      ...prev,
-                      [movie.id]: true,
-                    }))
-                  }
+                  className="object-cover"
                   onError={(e) => {
                     (e.currentTarget as HTMLImageElement).src =
                       "/placeholder.png";
-
-                    setImageLoaded((prev) => ({
-                      ...prev,
-                      [movie.id]: true,
-                    }));
                   }}
                 />
 
