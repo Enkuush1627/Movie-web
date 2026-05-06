@@ -78,7 +78,7 @@ export default function MoreLikeThis({ movieId }: Props) {
               <p className="text-xs text-muted-foreground">
                 ⭐{" "}
                 {typeof movie.vote_average === "number"
-                  ? movie.vote_average.toFixed(1)
+                  ? Math.round(movie.vote_average)
                   : "—"}
               </p>
             </div>

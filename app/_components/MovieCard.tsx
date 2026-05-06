@@ -28,7 +28,7 @@ export const MovieCard = ({
           <div className="flex gap-1 items-center">
             <Star size={18} strokeWidth={0} fill="#FDE047" />
             <p className="text-sm pb-1 dark:text-black">
-              {vote_average}{" "}
+              {Math.round(vote_average)}{" "}
               <span className="text-xs text-muted-foreground dark:text-black">
                 /10
               </span>

@@ -105,7 +105,7 @@ export const MovieCarousel = () => {
 
                   <div className="flex items-center gap-2 mb-4">
                     <Star size={16} className="text-yellow-400" />
-                    {movie.vote_average.toFixed(1)}
+                    {Math.round(movie.vote_average)}
                   </div>
 
                   <p className="text-sm line-clamp-3 mb-6">{movie.overview}</p>
